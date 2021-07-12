@@ -1,0 +1,45 @@
+query getBooksByAuthor($author: Author) {
+	book(author: $author) {
+		title
+		authors {
+			name
+		}
+	}
+}
+
+query getAllBooks() {
+	book {
+		title
+		authors {
+			name
+		}
+	}
+}
+
+query getAuthor($name: String) {
+	name
+	books {
+		title
+		authors {
+			name
+		}
+	}
+}
+
+mutation saveBook($title: String!, $authors: [Author]) {
+}
+
+mutation saveAuthor($name: String!, $books: [Book]) {
+}
+
+type Book {
+	id: ID
+	title: String
+	authors: [Author]
+}
+
+type Author {
+	id: ID
+	name: String
+	books: [Book]
+}
