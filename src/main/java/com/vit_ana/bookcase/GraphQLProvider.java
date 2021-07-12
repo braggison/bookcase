@@ -1,16 +1,17 @@
 package com.vit_ana.bookcase;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StreamUtils;
 
 import graphql.GraphQL;
@@ -25,6 +26,9 @@ import graphql.schema.idl.TypeRuntimeWiring;
 public class GraphQLProvider {
 	@Autowired
 	GraphQLDataFetchers graphQLDataFetchers;
+
+	@Autowired
+	private ResourceLoader resourceLoader;
 
 	private GraphQL graphQL;
 
@@ -56,8 +60,10 @@ public class GraphQLProvider {
 
 	@PostConstruct
 	public void init() throws IOException {
-		File schemaFile = ResourceUtils.getFile("classpath:schema.graphqls");
-		String schema = StreamUtils.copyToString(new FileInputStream(schemaFile), StandardCharsets.UTF_8);
+		Resource resource = resourceLoader.getResource("classpath:schema.graphqls");
+		InputStream schemaInputStream = resource.getInputStream();
+		byte[] bdata = FileCopyUtils.copyToByteArray(schemaInputStream);
+		String schema = new String(bdata, StandardCharsets.UTF_8);
 		GraphQLSchema graphQLSchema = buildSchema(schema);
 		this.graphQL = GraphQL.newGraphQL(graphQLSchema).build();
 	}
