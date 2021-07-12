@@ -16,7 +16,7 @@ services:
     ports:
       - mode: host
         protocol: tcp
-        published: 8080
+        published: 8081
         target: 8080
           
   db:
@@ -25,3 +25,8 @@ services:
     environment:
       - POSTGRES_USER=compose-postgres
       - POSTGRES_PASSWORD=compose-postgres
+    ports:
+      - mode: host
+        protocol: tcp
+        published: 5433
+        target: 5432
