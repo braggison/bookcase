@@ -1,6 +1,7 @@
 package com.vit_ana.bookcase.entities;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,7 +19,7 @@ import lombok.Setter;
 @Table(name="books")
 public class Book {
 	@Id
-	private String id;
+	private UUID id;
 	private String title;
 	
 	@ManyToMany
