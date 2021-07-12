@@ -12,7 +12,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.util.StreamUtils;
 
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
