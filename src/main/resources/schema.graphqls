@@ -1,6 +1,6 @@
 type Query {
 	getAllBooks: [Book]
-	getBooksByAuthor(authorId: ID): [Book]
+	getBooksByAuthor(authorName: String): [Book]
 	getAuthor(name: String): [Author] 
 }
 
