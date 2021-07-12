@@ -14,12 +14,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="authors")
+@Table(name = "authors")
 public class Author {
 	@Id
 	private UUID id;
 	private String name;
-	
-	@ManyToMany(mappedBy="authors")
+
+	public Author() {
+		this.id = UUID.randomUUID();
+	}
+
+	@ManyToMany(mappedBy = "authors")
 	private List<Book> books;
 }

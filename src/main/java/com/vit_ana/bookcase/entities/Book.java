@@ -16,12 +16,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="books")
+@Table(name = "books")
 public class Book {
 	@Id
 	private UUID id;
 	private String title;
-	
+
+	public Book() {
+		id = UUID.randomUUID();
+	}
+
 	@ManyToMany
 	@JoinTable(name = "book_authors", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
 	private List<Author> authors;

@@ -5,8 +5,8 @@ type Query {
 }
 
 type Mutation {
-	saveBook(title: String!): Book!
-	saveAuthor(name: String!): Author!
+	saveBook(input: SaveBookInput!): Book!
+	saveAuthor(input: SaveAuthorInput!): Author!
 }
 
 type Book {
@@ -19,4 +19,14 @@ type Author {
 	id: ID
 	name: String
 	books: [Book]
+}
+
+input SaveBookInput {
+	title: String!
+	authors: [String!]
+}
+
+input SaveAuthorInput {
+	name: String!
+	books: [String!]
 }

@@ -2,6 +2,8 @@ package com.vit_ana.bookcase;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +40,24 @@ public class GraphQLDataFetchers {
 		return dataFetchingEnvironment -> {
 			String name = dataFetchingEnvironment.getArgument("name");
 			return authorRepository.findAuthorsByName(name);
+		};
+	}
+
+	@Transactional
+	public DataFetcher<Book> saveBookDataFetcher() {
+		return dataFetchingEnvironment -> {
+			Book book = new Book();
+			// book.setTitle(saveBookInput.getTitle());
+			return bookRepository.saveAndFlush(book);
+		};
+	}
+
+	@Transactional
+	public DataFetcher<Author> saveAuthorDataFetcher() {
+		return dataFetchnigEnvironment -> {
+			Author author = new Author();
+			// author.setName(saveAuthorInput.getName());
+			return authorRepository.saveAndFlush(author);
 		};
 	}
 }
