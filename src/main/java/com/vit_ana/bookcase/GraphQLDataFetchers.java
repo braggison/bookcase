@@ -49,6 +49,7 @@ public class GraphQLDataFetchers {
 	public DataFetcher<Book> saveBookDataFetcher() {
 		return dataFetchingEnvironment -> {
 			Book book = new Book();
+			// TODO Add object mapper
 			Map<String, Object> arguments = dataFetchingEnvironment.getArguments();
 			if (arguments.containsKey("input")) {
 				Map input = (Map) arguments.get("input");
