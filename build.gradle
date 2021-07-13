@@ -44,3 +44,12 @@ dependencyManagement {
 test {
 	useJUnitPlatform()
 }
+
+task copyJarToBin (type: Copy ){
+    dependsOn build
+    duplicatesStrategy DuplicatesStrategy.INCLUDE
+
+    from "${buildDir}/libs/${jar.archiveFileName.get()}"
+    into "${projectDir}/src/main/docker/"
+}
+build.finalizedBy copyJarToBin
