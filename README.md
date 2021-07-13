@@ -8,5 +8,6 @@ Command to build project
 Command to start docker container
 ```
 cd src/main/docker
+docker-compose build
 docker-compose up
 ```
