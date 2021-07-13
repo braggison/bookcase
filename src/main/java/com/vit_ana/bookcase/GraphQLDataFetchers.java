@@ -1,6 +1,7 @@
 package com.vit_ana.bookcase;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -25,6 +26,7 @@ public class GraphQLDataFetchers {
 
 	public DataFetcher<List<Book>> getAllBooksDataFetcher() {
 		return dataFetchingEnvironment -> {
+
 			return bookRepository.findAll();
 		};
 	}
@@ -47,16 +49,48 @@ public class GraphQLDataFetchers {
 	public DataFetcher<Book> saveBookDataFetcher() {
 		return dataFetchingEnvironment -> {
 			Book book = new Book();
-			// book.setTitle(saveBookInput.getTitle());
+			Map<String, Object> arguments = dataFetchingEnvironment.getArguments();
+			if (arguments.containsKey("input")) {
+				Map input = (Map) arguments.get("input");
+				if (input.containsKey("title"))
+					book.setTitle((String) input.get("title"));
+				if (input.containsKey("authors")) {
+					for (Object authorName : (List) input.get("authors")) {
+						String name = (String) authorName;
+						Author author;
+						if (authorRepository.countAuthorsByName(name) == 0) {
+							author = new Author();
+							author.setName((String) authorName);
+							author = authorRepository.saveAndFlush(author);
+						} else {
+							author = authorRepository.findAuthorsByName(name).get(0);
+						}
+						book.addAuthor(author);
+					}
+				}
+			}
 			return bookRepository.saveAndFlush(book);
 		};
 	}
 
 	@Transactional
 	public DataFetcher<Author> saveAuthorDataFetcher() {
-		return dataFetchnigEnvironment -> {
+		return dataFetchingEnvironment -> {
 			Author author = new Author();
-			// author.setName(saveAuthorInput.getName());
+			Map<String, Object> arguments = dataFetchingEnvironment.getArguments();
+			if (arguments.containsKey("input")) {
+				Map input = (Map) arguments.get("input");
+				if (input.containsKey("name"))
+					author.setName((String) input.get("name"));
+				if (input.containsKey("books")) {
+					for (Object bookTitle : (List) input.get("books")) {
+						Book book = new Book();
+						book.setTitle((String) bookTitle);
+						book = bookRepository.saveAndFlush(book);
+						author.addBook(book);
+					}
+				}
+			}
 			return authorRepository.saveAndFlush(author);
 		};
 	}

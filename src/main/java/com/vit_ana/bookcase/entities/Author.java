@@ -1,5 +1,6 @@
 package com.vit_ana.bookcase.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,4 +27,18 @@ public class Author {
 
 	@ManyToMany(mappedBy = "authors")
 	private List<Book> books;
+
+	public Book addBook(Book book) {
+		getBooks().add(book);
+		if (!book.getAuthors().contains(this))
+			book.addAuthor(this);
+
+		return book;
+	}
+
+	public List<Book> getBooks() {
+		if (books == null)
+			books = new ArrayList<>();
+		return books;
+	}
 }

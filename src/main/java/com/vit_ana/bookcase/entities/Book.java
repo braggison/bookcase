@@ -1,5 +1,6 @@
 package com.vit_ana.bookcase.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,5 +30,19 @@ public class Book {
 	@ManyToMany
 	@JoinTable(name = "book_authors", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
 	private List<Author> authors;
+
+	public Author addAuthor(Author author) {
+		getAuthors().add(author);
+		if (!author.getBooks().contains(this))
+			author.addBook(this);
+
+		return author;
+	}
+
+	public List<Author> getAuthors() {
+		if (authors == null)
+			authors = new ArrayList<>();
+		return authors;
+	}
 
 }

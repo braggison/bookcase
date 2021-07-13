@@ -53,8 +53,8 @@ public class GraphQLProvider {
 						graphQLDataFetchers.getAuthorDataFetcher()))
 				.type(TypeRuntimeWiring.newTypeWiring("Mutation").dataFetcher("saveBook",
 						graphQLDataFetchers.saveBookDataFetcher()))
-				.type(TypeRuntimeWiring.newTypeWiring("Book").dataFetcher("author",
-						graphQLDataFetchers.getAuthorDataFetcher()))
+				.type(TypeRuntimeWiring.newTypeWiring("Mutation").dataFetcher("saveAuthor",
+						graphQLDataFetchers.saveAuthorDataFetcher()))
 				.build();
 
 	}
