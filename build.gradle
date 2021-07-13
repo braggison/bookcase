@@ -49,7 +49,7 @@ task copyJarToBin (type: Copy ){
     dependsOn build
     duplicatesStrategy DuplicatesStrategy.INCLUDE
 
-    from "${buildDir}/libs/${jar.archiveFileName.get()}"
+    from "${buildDir}/libs/com.vit_ana.bookcase-1.0.0-SNAPSHOT.jar"
     into "${projectDir}/src/main/docker/"
 }
 build.finalizedBy copyJarToBin
